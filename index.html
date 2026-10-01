@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CHAOSCREW ONLINE</title>
+<style>
+:root{--bg:#07080d;--p:#121521;--p2:#181c29;--line:#2a3040;--txt:#f7f7fb;--mut:#969db0;--a:#9b7cff;--g:#35e0b3;--r:#ff5277;--y:#ffd45a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#42277c55,transparent 35%),radial-gradient(circle at 90% 15%,#006b7850,transparent 30%),var(--bg);color:var(--txt);font-family:system-ui,Arial;min-height:100vh}.wrap{max-width:1050px;margin:auto;padding:20px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.logo{font-size:21px;font-weight:1000;letter-spacing:2px}.logo b{color:var(--a)}.screen{display:none}.screen.on{display:block}.card{background:linear-gradient(180deg,#161a26,#0e1017);border:1px solid var(--line);border-radius:25px;padding:22px;box-shadow:0 18px 70px #0008}.hero{min-height:78vh;display:grid;place-items:center;text-align:center}.hero h1{font-size:clamp(50px,9vw,96px);line-height:.9;letter-spacing:-5px;margin:0 0 18px}.hero h1 b{color:var(--a)}p{color:var(--mut);line-height:1.65}.btn{padding:14px 19px;border-radius:14px;background:linear-gradient(135deg,#8c6aff,#c56bff);color:white;font-weight:900;border:0;cursor:pointer}.btn.alt{background:#ffffff08;border:1px solid var(--line)}.btn:disabled{opacity:.4}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.players{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:18px}.player{padding:17px;text-align:center;border:1px solid var(--line);background:#ffffff05;border-radius:19px}.avatar{width:75px;height:90px;border-radius:22px;background:var(--skin,#eeb98e);margin:0 auto 10px;position:relative;box-shadow:inset 0 -20px #0002}.avatar:before{content:"";position:absolute;left:7px;right:7px;top:-2px;height:38px;border-radius:24px 24px 14px 14px;background:var(--hair,#17171b)}label{font-size:13px;color:var(--mut);display:block;margin:12px 0 6px}input,select{width:100%;padding:13px;background:#090b10;border:1px solid var(--line);border-radius:12px;color:white}.code{font-size:30px;font-weight:1000;letter-spacing:5px}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--mut);display:inline-block}.question{font-size:29px;font-weight:950}.opts{display:grid;gap:10px;margin-top:18px}.opt{padding:17px;text-align:right;border:1px solid var(--line);background:#ffffff05;color:white;border-radius:15px;cursor:pointer}.opt.sel{border-color:var(--g);background:#35e0b312}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:15px}.stat{border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}.stat b{display:block;font-size:24px}.big{font-size:55px;font-weight:1000;text-align:center;color:var(--y)}.center{text-align:center}.hide{display:none!important}@media(max-width:700px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body><div class="wrap">
+<div class="top"><div class="logo">CHAOS<b>CREW</b></div><div id="net" class="pill">OFFLINE</div></div>
+
+<section id="home" class="screen on"><div class="hero"><div>
+<div class="pill">ONLINE · 4–10 PLAYERS · PARTY SURVIVAL</div>
+<h1>החבורה שלכם.<br><b>הכאוס שלכם.</b></h1>
+<p>משחק הישרדות אונליין שנבנה סביב החבורה. כל אחד במכשיר אחר. חדר אחד. דמויות אישיות. מיני־משחקים. הדחות. ובמהלך הזמן — המשחק לומד מי אתם.</p>
+<div class="actions" style="justify-content:center"><button class="btn" onclick="show('setup');mode='create'">יצירת חדר</button><button class="btn alt" onclick="show('join');mode='join'">הצטרפות לחדר</button></div>
+</div></div></section>
+
+<section id="setup" class="screen"><div class="card"><h2>בונים דמות</h2><p>הדמות, הסגנון והפרופיל שלך נשמרים במכשיר הזה.</p><div class="grid"><div>
+<label>שם</label><input id="name" maxlength="18" placeholder="השם שלכם">
+<label>שיער</label><select id="hair"><option value="#17171b">שחור</option><option value="#70401f">חום</option><option value="#d6b06b">בלונד</option><option value="#d95c8c">ורוד</option><option value="#6174ff">כחול</option></select>
+<label>עור</label><select id="skin"><option value="#efbd91">בהיר</option><option value="#c8875b">מוקה</option><option value="#8d593b">כהה</option></select>
+</div><div class="center"><div id="av" class="avatar"></div><h3 id="nm">הדמות שלכם</h3></div></div>
+<div class="actions"><button class="btn" onclick="quizStart()">שאלון 10 שאלות</button><button class="btn alt" onclick="show('home')">חזרה</button></div></div></section>
+
+<section id="quiz" class="screen"><div class="card"><div class="pill"><span id="qn">1</span>/10</div><div id="qt" class="question"></div><div id="qo" class="opts"></div><div class="actions"><button id="qnext" class="btn" disabled onclick="qnext()">המשך</button></div></div></section>
+
+<section id="reveal" class="screen"><div class="card center"><div class="pill">הפרופיל נוצר</div><h1 id="role"></h1><div id="rav"></div><p id="desc"></p><div id="stats" class="stats"></div><p id="ability"></p><div class="actions" style="justify-content:center"><button class="btn" onclick="afterProfile()">להמשיך</button></div></div></section>
+
+<section id="join" class="screen"><div class="card"><h2>הצטרפות</h2><p>קבלו QR מהמארח או הקלידו את הקוד.</p><label>קוד חדר</label><input id="code" maxlength="5" placeholder="ABCDE"><div class="actions"><button class="btn" onclick="join()">להצטרף</button><button class="btn alt" onclick="show('home')">חזרה</button></div></div></section>
+
+<section id="lobby" class="screen"><div class="card"><div class="grid"><div><div class="pill">קוד חדר</div><div id="rcode" class="code"></div><p>שתפו את הקוד או את הקישור. כולם נכנסים מהטלפון שלהם.</p><div id="qr"></div></div><div><h2>לובי החבורה</h2><p>המארח מתחיל. כולם צריכים להיות מוכנים.</p><div class="actions"><button id="ready" class="btn alt" onclick="toggleReady()">אני מוכן</button><button id="start" class="btn hide" onclick="startGame()">התחל כאוס</button></div></div></div><div id="plist" class="players"></div></div></section>
+
+<section id="game" class="screen"><div class="card"><div class="pill">סיבוב <span id="round">1</span></div><h1 id="gt"></h1><p id="gd"></p><div id="ga"></div></div></section>
+
+<section id="score" class="screen"><div class="card"><h2>לוח התוצאות</h2><div id="scores" class="players"></div><p id="msg"></p><div class="actions"><button id="next" class="btn" onclick="nextRound()">סיבוב הבא</button></div></div></section>
+</div>
+<script>
+const games=[
+{id:"reaction",t:"מי הכי מהיר?",d:"כשהכפתור הופך לירוק — לחצו. המהירים לוקחים יותר נקודות."},
+{id:"memory",t:"זיכרון כאוטי",d:"זכרו רצף קצר והקלידו אותו אחרי שהוא נעלם."},
+{id:"group",t:"מי מכיר את מי?",d:"שאלה על החבורה. בחרו תשובה — והמערכת אוספת עוד נתונים עליכם."},
+{id:"chaos",t:"הוראה סודית",d:"לכל שחקן יש משימה. הראשונים שמבצעים נכון מקבלים נקודות."}
+];
+const qs=[
+["המעלית נתקעה עם כל החבורה. מה אתם עושים?",["צוחק","מחפש יציאה","מצלם","מאשים מישהו"]],
+["חבר אומר שיש לו רעיון גאוני. מה אתם עושים?",["זורם","בודק סיכון","אומר שזה גרוע","מחכה לראות"]],
+["חתול ענק רודף אחריכם ויש לכם פיצה.",["רץ","זורק פיצה","מנסה לרכב עליו","נותן לחבר לרוץ"]],
+["נשארו 10 שניות ואפשר להמר בגדול.",["ברור שכן","רק אם הסיכוי טוב","לא","תלוי בחבורה"]],
+["את מי היית שולח למשימה סודית?",["חכם","משוגע","שקט","זה שתמיד מסתדר"]],
+["מישהו העתיק את הבחירה שלך.",["מחליף","נשאר","מבלבל אותו","צוחק"]],
+["100 נקודות בטוחות או 300 בהימור?",["100","300","מטבע","שואל"]],
+["איזה כוח היית רוצה?",["מהירות","לקרוא עתיד","לשנות מזל","לגנוב נקודות"]],
+["חבר נכשל בטעות מצחיקה.",["צוחק","עוזר","מצלם","מנסה שוב"]],
+["כולם נגדך.",["נלחם","מחפש חולשה","מפתיע","לא אכפת לי"]]
+];
+let ws=null,room=null,host=false,me=null,mode="",q=0,ans=[],sel=null,ready=false,current=null;
+
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));document.getElementById(id).classList.add("on");scrollTo(0,0)}
+function saveProfile(){let p=JSON.parse(localStorage.getItem("cc_profile")||"null");if(!p)p={name:document.getElementById("name").value};return p}
+function avatar(){return {hair:document.getElementById("hair").value,skin:document.getElementById("skin").value}}
+document.getElementById("name").oninput=()=>document.getElementById("nm").textContent=document.getElementById("name").value||"הדמות שלכם";
+document.getElementById("hair").onchange=draw;document.getElementById("skin").onchange=draw;
+function draw(){document.getElementById("av").style.setProperty("--hair",document.getElementById("hair").value);document.getElementById("av").style.setProperty("--skin",document.getElementById("skin").value)}
+draw();
+
+function quizStart(){if(!document.getElementById("name").value.trim())return alert("הכניסו שם");q=0;ans=[];quiz();show("quiz")}
+function quiz(){document.getElementById("qn").textContent=q+1;document.getElementById("qt").textContent=qs[q][0];document.getElementById("qo").innerHTML="";sel=null;document.getElementById("qnext").disabled=true;qs[q][1].forEach((x,i)=>{let b=document.createElement("button");b.className="opt";b.textContent=x;b.onclick=()=>{document.querySelectorAll(".opt").forEach(a=>a.classList.remove("sel"));b.classList.add("sel");sel=i;document.getElementById("qnext").disabled=false};document.getElementById("qo").appendChild(b)})}
+function qnext(){ans.push(sel);if(q<9){q++;quiz()}else reveal()}
+function reveal(){let s=[50,50,50,50],sum=ans.reduce((a,x)=>a+x,0);s[0]+=sum*2;s[1]+=(ans.filter(x=>x===1).length*8);s[2]+=(ans.filter(x=>x===2).length*9);s[3]+=(ans.filter(x=>x===3).length*10);s=s.map(x=>Math.max(20,Math.min(99,Math.round(x))));let max=Math.max(...s),roles=["SPEED DEMON","THE BRAIN","LUCKY CHAOS","THE TRICKSTER"],ri=s.indexOf(max);let p={name:document.getElementById("name").value.trim(),avatar:avatar(),role:roles[ri],stats:{speed:s[0],brain:s[1],luck:s[2],chaos:s[3]}};localStorage.setItem("cc_profile",JSON.stringify(p));me=p;document.getElementById("role").textContent=roles[ri];document.getElementById("desc").textContent=["מהיר, אינסטינקטיבי ולא מפחד ללחוץ ראשון.","קורא מצבים ומחכה לרגע הנכון.","מוכן לקחת סיכון כשאחרים מפחדים.","חי על כאוס ומהלכים שאף אחד לא ראה."][ri];document.getElementById("stats").innerHTML=Object.entries(p.stats).map(([k,v])=>`<div class="stat">${k}<b>${v}</b></div>`).join("");document.getElementById("ability").textContent="✨ יכולת: בונוס קטן שמתאים לסגנון שלך";document.getElementById("rav").innerHTML=`<div class="avatar" style="--hair:${p.avatar.hair};--skin:${p.avatar.skin}"></div>`;show("reveal")}
+function afterProfile(){if(mode==="join")show("join");else create()}
+
+function connect(){ws=new WebSocket((location.protocol==="https:"?"wss://":"ws://")+location.host);ws.onopen=()=>document.getElementById("net").textContent="ONLINE";ws.onclose=()=>document.getElementById("net").textContent="OFFLINE";ws.onmessage=e=>handle(JSON.parse(e.data))}
+function ensure(){if(!ws||ws.readyState!==1)connect()}
+function create(){ensure();setTimeout(()=>ws.send(JSON.stringify({type:"create",...me})),200);host=true}
+function join(){let c=document.getElementById("code").value.trim().toUpperCase();if(c.length!==5)return alert("קוד לא תקין");let p=JSON.parse(localStorage.getItem("cc_profile")||"null");if(!p)return show("setup");ensure();setTimeout(()=>ws.send(JSON.stringify({type:"join",code:c,...p})),200)}
+function handle(m){
+ if(m.type==="created"||m.type==="joined"){room=m.room;host=m.host;document.getElementById("rcode").textContent=room.code;history.replaceState({},'',location.pathname+"#join="+room.code);makeQR(room.code);render(room);show("lobby")}
+ if(m.type==="room"){room=m.room;render(room)}
+ if(m.type==="promoted"){host=true;render(room)}
+ if(m.type==="start"){room=m.room;current=m.game;startMini(current)}
+ if(m.type==="eliminate"){room=m.room;renderScore(room);alert(m.eliminated+" הודח/ה ☠️")}
+ if(m.type==="winner"){room=m.room;renderScore(room);document.getElementById("msg").textContent="🏆 "+m.winner+" הוא/היא האלוף/ה!"}
+ if(m.type==="error")alert(m.message)
+}
+function makeQR(c){let url=location.origin+location.pathname+"#join="+c;document.getElementById("qr").innerHTML=`<div style="background:white;color:black;padding:10px;border-radius:10px;display:inline-block"><b>QR</b><div style="font-size:12px">${url}</div></div>`}
+function render(r){document.getElementById("plist").innerHTML=r.players.map(p=>`<div class="player"><div class="avatar" style="--hair:${p.avatar?.hair||"#17171b"};--skin:${p.avatar?.skin||"#efbd91"}"></div><b>${p.name}</b><div>${p.ready?"✓ מוכן":"ממתין..."}</div><div>⭐ ${p.score}</div></div>`).join("");document.getElementById("start").classList.toggle("hide",!host);document.getElementById("start").disabled=r.players.length<2||!r.players.every(p=>p.ready)}
+function toggleReady(){ready=!ready;document.getElementById("ready").textContent=ready?"מוכן ✓":"אני מוכן";ws.send(JSON.stringify({type:"ready",ready}))}
+function startGame(){if(!host)return;current=games[Math.floor(Math.random()*games.length)];ws.send(JSON.stringify({type:"start",game:current}));}
+function startMini(g){document.getElementById("round").textContent=room.round;document.getElementById("gt").textContent=g.t;document.getElementById("gd").textContent=g.d;let a=document.getElementById("ga");a.innerHTML="";show("game");if(g.id==="reaction")reaction(a);if(g.id==="memory")memory(a);if(g.id==="group")group(a);if(g.id==="chaos")chaos(a)}
+function score(n){ws.send(JSON.stringify({type:"score",points:n}))}
+function reaction(a){a.innerHTML='<div id="rt" class="big">חכו...</div><div class="actions" style="justify-content:center"><button id="rb" class="btn" disabled>WAIT</button></div>';setTimeout(()=>{let t=performance.now();document.getElementById("rt").textContent="🔥";document.getElementById("rb").disabled=false;document.getElementById("rb").textContent="לחץ!";document.getElementById("rb").onclick=()=>{let ms=performance.now()-t;score(Math.max(5,Math.round(120-ms/8)));document.getElementById("rb").disabled=true;document.getElementById("rt").textContent=Math.round(ms)+"ms"}},1000+Math.random()*3000)}
+function memory(a){let seq=Array.from({length:5},()=>Math.floor(Math.random()*9)+1).join("");a.innerHTML=`<div id="seq" class="big">${seq}</div>`;setTimeout(()=>{document.getElementById("seq").textContent="?";a.insertAdjacentHTML("beforeend",'<input id="mi" inputmode="numeric" placeholder="הקלידו את הרצף"><div class="actions"><button class="btn" onclick="memCheck()">בדיקה</button></div>')},2200);window.mem=seq}
+function memCheck(){score(document.getElementById("mi").value===window.mem?100:10);alert(document.getElementById("mi").value===window.mem?"בול!":"לא הפעם 😈")}
+function group(a){let q=["מי הכי סביר שינסה לרמות ויגיד שזה אסטרטגיה?","מי הכי סביר לנצח במקרה מוחלט?","מי הכי סביר לצחוק ברגע שאסור?"][Math.floor(Math.random()*3)];a.innerHTML=`<h2 class="center">${q}</h2><div class="opts">${room.players.map(p=>`<button class="opt" onclick="score(30)">${p.name}</button>`).join("")}</div>`}
+function chaos(a){let t=["לחצו 3 פעמים","כתבו את השם שלכם הפוך","בחרו 7","חכו 3 שניות ואז לחצו"];let x=t[Math.floor(Math.random()*t.length)];a.innerHTML=`<div class="center"><h2>המשימה הסודית שלך</h2><h1>${x}</h1><button class="btn" onclick="score(70)">סיימתי</button></div>`}
+function renderScore(r){document.getElementById("scores").innerHTML=[...r.players].sort((a,b)=>b.score-a.score).map((p,i)=>`<div class="player"><b>${i+1}. ${p.name}</b><h2>⭐ ${p.score}</h2>${p.alive?"🟢 במשחק":"☠️ הודח"}</div>`).join("");document.getElementById("next").classList.toggle("hide",!host);show("score")}
+function nextRound(){if(!host)return;let g=games[Math.floor(Math.random()*games.length)];ws.send(JSON.stringify({type:"next",game:g}))}
+const hash=location.hash.match(/join=([A-Z0-9]+)/i);if(hash){setTimeout(()=>{document.getElementById("code").value=hash[1].toUpperCase();show("join")},50)}
+</script></body></html>
